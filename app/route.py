@@ -8,9 +8,9 @@ from werkzeug.security import check_password_hash
 from functools import wraps
 
 
+#DECORATORS 
 
-
-def token_required(func):
+def login_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
         token = None
@@ -38,7 +38,7 @@ def admin_required(func):
     return decorated
 
 
-
+#ALL AVAILABLE ROUTES
 @app.route('/login')
 def login():
     auth = request.authorization
@@ -65,16 +65,16 @@ def home():
 
 # Get all movies
 @app.route('/movies', methods=['GET'])
-@token_required
+@login_required
 def get_all_movies(current_user):
     movies = Movies.query.all()
     # f.director()
     return jsonify({'message': 'Fetched all movies successfully.', 'movies': [movie.serialized for movie in movies]})
 
 
-# Get movie by id
+#Get movie by ID
 @app.route('/movies/<id>', methods=['GET'])
-@token_required
+@login_required
 def get_one_movie(current_user, id):
     movie = Movies.query.get(id)
     if not movie:
@@ -84,7 +84,7 @@ def get_one_movie(current_user, id):
 
 # Add new movie
 @app.route('/movies', methods=['POST'])
-@token_required
+@login_required
 @admin_required
 def add_movie(current_user):
     data = request.get_json()
@@ -104,9 +104,9 @@ def add_movie(current_user):
     return jsonify({'message': 'New movie added successfully.', 'movie': new_movie.serialized})
 
 
-# Update movie
+#For update
 @app.route('/movies/<id>', methods=['PUT'])
-@token_required
+@login_required
 @admin_required
 def update_movie(current_user, id):
     movie = Movies.query.get(id)
@@ -122,9 +122,9 @@ def update_movie(current_user, id):
     return jsonify({'message': 'Movie data updated successfully.', 'movie': movie.serialized})
 
 
-# Delete movie
+#For delete
 @app.route('/movies/<id>', methods=['DELETE'])
-@token_required
+@login_required
 @admin_required
 def delete_movie(current_user, id):
     movie = Movies.query.get(id)
@@ -135,9 +135,9 @@ def delete_movie(current_user, id):
     return jsonify({'message': 'Movie is deleted successfully.', 'movie': movie.serialized})
 
 
-# Search movies
+#For search
 @app.route('/search', methods=['GET'])
-@token_required
+@login_required
 def search_movie(current_user):
     filters = []
     name = request.args.get('name')

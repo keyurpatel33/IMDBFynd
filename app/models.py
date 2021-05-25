@@ -1,7 +1,7 @@
 from app.flaskapi import db
 
 
-# Movie info table
+#MOVIES
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     popularity = db.Column(db.Integer, nullable=False)
@@ -22,7 +22,7 @@ class Movies(db.Model):
         }
 
 
-# Users info table
+#USER
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
