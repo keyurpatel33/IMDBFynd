@@ -5,9 +5,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 URI = "mysql://{}:{}@{}/{}".format(
     
-    os.environ.get('MYSQL_ADDON_HOST'),
+    
     os.environ.get('MYSQL_ADDON_USER'),
     os.environ.get('MYSQL_ADDON_PASSWORD'),
+    os.environ.get('MYSQL_ADDON_HOST'),
     os.environ.get('MYSQL_ADDON_DB')
 )
 
