@@ -3,7 +3,7 @@ import os
 from app import app
 from flask_sqlalchemy import SQLAlchemy
 
-URI = "mysql://{}:{}@{}/{}".format(
+URI = "mysql://{}:{}@{}:3306/{}".format(
     
     
     os.environ.get('MYSQL_ADDON_USER'),
